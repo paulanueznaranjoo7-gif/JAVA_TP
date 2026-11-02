@@ -1,0 +1,183 @@
+import java.util.ArrayList;
+public class PermissionsProfile {
+    
+    String[] permisos = new String[0];
+    
+    public PermissionsProfile() {}
+    
+    public PermissionsProfile(String...permisos) {
+        for (String permiso : permisos) {
+          grant(permiso)
+        }
+    }
+    
+    public int numberOfPermissions() {
+        return permisos.length;
+    }
+    
+    public boolean isEmpty() {
+        if (permisos.length == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    private boolean isValid(String permiso) {
+
+        if (permiso == null) {
+            return false;
+        }
+
+        for (String permitido : Constants.PermissionsTypes) {
+            if (permitido.equals(permiso)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public boolean hasPermission(String permiso) {
+        for (String item: permisos) {
+            if item.equals(permiso) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean grant(String permiso) {
+       
+       if (!isValid(permiso)) {
+        throw new IllegalArgumentException();
+        }
+
+        if (hasPermission(permiso)) {
+            return false;
+        }
+
+        permisos = Arrays.copyOf(permisos, permisos.length + 1);
+        permisos[permisos.length - 1] = permiso;
+
+        return true;
+    }
+    
+    public boolean revoke(String permiso) { 
+        
+        if (!hasPermission(permiso)) {
+            return false;
+        }
+
+        String[] nuevo = new String[permisos.length - 1];
+
+        int i = 0;
+
+        for (String item : permisos) {
+            if (!item.equals(permiso)) {
+                nuevo[i] = item;
+                i++;
+            }
+    }
+
+        permisos = nuevo;
+
+        return true;
+    }
+    
+    public PermissionsProfile combine(PermissionsProfile perfil) {
+        
+        PermissionsProfile nuevoperfil = new PermissionsProfile();
+        
+        for (String permiso : permisos) {
+            nuevoperfil.grant(permiso);
+        }
+        
+        for (String permiso : perfil.permisos) {
+            nuevoperfil.grant(permiso);
+        }
+        
+        return nuevoperfil;
+    }
+    
+    public PermissionsProfile sharedPermissions(PermissionsProfile perfil) {
+        
+        PermissionsProfile intersec = new PermissionsProfile();
+
+        for (String permiso : perfil.permisos) {
+            if (this.hasPermission(permiso)) {
+            intersec.grant(permiso);
+            }
+        }
+
+        return intersec;
+    }
+    
+    public PermissionsProfile difference(PermissionsProfile perfildiffer) {
+        
+        PermissionsProfile differ = new PermissionsProfile();
+        
+        for (String permiso: permisos) {
+            if (!perfildiffer.hasPermission(permiso)) {
+                differ.grant(permiso);
+            }
+        }
+        return differ;
+    }
+    
+    public String[] permissions() {
+        
+        String[] copia = new String[permisos.length];
+
+        for (int i = 0; i < permisos.length; i++) {
+            copia[i] = permisos[i];
+        }
+
+        return copia;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+
+    if (this == o) {
+        return true;
+    }
+
+    if (o instanceof PermissionsProfile p) {
+
+        if (numberOfPermissions() != p.numberOfPermissions()) {
+            return false;
+        }
+
+        for (String permiso : permisos) {
+            if (!p.hasPermission(permiso)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+    @Override
+    public String toString() {
+
+    String resultado = "[";
+
+    for (int i = 0; i < permisos.length; i++) {
+        resultado += permisos[i];
+
+        if (i < permisos.length - 1) {
+            resultado += ", ";
+        }
+    }
+
+    resultado += "]";
+
+    return resultado;
+}
+}
+
