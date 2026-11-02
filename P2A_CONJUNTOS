@@ -1,0 +1,147 @@
+
+package tp.practicas;
+
+import java.util.Arrays;
+
+public class ConjuntoDeStrings {
+
+    private String[] elementos = new String[0];
+
+    // CONSTRUCTOR
+    public ConjuntoDeStrings(String... nuevosElementos) {
+        for (String elemento : nuevosElementos) {
+            añade(elemento);
+        }
+    }
+
+    // CARDINAL
+    public int cardinal() {
+        return elementos.length;
+    }
+
+    // ESTA VACÍO
+    public boolean estáVacío() {
+        return elementos.length == 0;
+    }
+
+    // AÑADE
+    public boolean añade(String elemento) {
+        if (elemento == null || pertenece(elemento)) {
+            return false;
+        }
+
+        elementos = Arrays.copyOf(elementos, elementos.length + 1);
+        elementos[elementos.length - 1] = elemento;
+
+        return true;
+    }
+
+    // PERTENECE
+    public boolean pertenece(String item) {
+        for (String elemento : elementos) {
+            if (elemento.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // UNIÓN
+    public ConjuntoDeStrings unión(ConjuntoDeStrings otro) {
+        ConjuntoDeStrings resultado = new ConjuntoDeStrings();
+
+        for (String elemento : elementos) {
+            resultado.añade(elemento);
+        }
+
+        for (String elemento : otro.elementos) {
+            resultado.añade(elemento);
+        }
+
+        return resultado;
+    }
+
+    // INTERSECCIÓN
+    public ConjuntoDeStrings intersección(ConjuntoDeStrings otro) {
+        ConjuntoDeStrings resultado = new ConjuntoDeStrings();
+
+        for (String elemento : elementos) {
+            if (otro.pertenece(elemento)) {
+                resultado.añade(elemento);
+            }
+        }
+
+        return resultado;
+    }
+
+    // DIFERENCIA
+    public ConjuntoDeStrings diferencia(ConjuntoDeStrings otro) {
+        ConjuntoDeStrings resultado = new ConjuntoDeStrings();
+
+        for (String elemento : elementos) {
+            if (!otro.pertenece(elemento)) {
+                resultado.añade(elemento);
+            }
+        }
+
+        return resultado;
+    }
+
+    // EQUALS
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o instanceof ConjuntoDeStrings c) {
+            if (cardinal() != c.cardinal()) {
+                return false;
+            }
+
+            for (String elemento : elementos) {
+                if (!c.pertenece(elemento)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    // HASHCODE (COHERENTE CON EQUALS)
+    @Override
+    public int hashCode() {
+        int resultado = 0;
+
+        for (String elemento : elementos) {
+            resultado += elemento.hashCode();
+        }
+
+        return resultado;
+    }
+
+    // CONTENIDO
+    public boolean contenido(ConjuntoDeStrings c) {
+        for (String elemento : c.elementos) {
+            if (!this.pertenece(elemento)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // ELEMENTOS
+    public String[] elementos() {
+        String[] array = new String[cardinal()];
+
+        for (int i = 0; i < elementos.length; i++) {
+            array[i] = elementos[i];
+        }
+
+        return array;
+    }
+}
