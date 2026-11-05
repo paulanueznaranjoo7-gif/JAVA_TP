@@ -1,0 +1,98 @@
+
+package tp.practicas;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Catalog {
+
+    private List<Resource> catalogo = new ArrayList<>();
+
+    public Catalog() {
+    }
+
+    public Catalog(Resource... recursos) {
+        for (Resource recurso : recursos) {
+            addResource(recurso);
+        }
+    }
+
+    public int size() {
+        return catalogo.size();
+    }
+
+    public boolean addResource(Resource recurso) {
+
+        if (recurso == null) {
+            throw new NullPointerException();
+        }
+
+        if (getResource(recurso.getCode()) != null) {
+            return false;
+        } else {
+            catalogo.add(recurso);
+            return true;
+        }
+    }
+
+    public Resource getResource(String code) {
+
+        for (Resource item : catalogo) {
+            if (item.getCode().equals(code)) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    public List<Book> getBooksByAuthor(String author) {
+
+        List<Book> libroAutores = new ArrayList<>();
+
+        for (Resource recurso : catalogo) {
+            if (recurso instanceof Book) {
+
+                Book libro = (Book) recurso;
+
+                if (libro.getAuthor().equals(author)) {
+                    libroAutores.add(libro);
+                }
+            }
+        }
+
+        return libroAutores;
+    }
+
+    public List<Magazine> getMagazinesByTitleAndYear(String title, int year) {
+
+        List<Magazine> magazineYearTitle = new ArrayList<>();
+
+        for (Resource recurso : catalogo) {
+            if (recurso instanceof Magazine) {
+
+                Magazine revista = (Magazine) recurso;
+
+                if (revista.getTitle().equals(title)
+                        && revista.getYear() == year) {
+                    magazineYearTitle.add(revista);
+                }
+            }
+        }
+
+        return magazineYearTitle;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder resultado = new StringBuilder("# CATÁLOGO:");
+
+        for (Resource recurso : catalogo) {
+            resultado.append("\n- ");
+            resultado.append(recurso.toString());
+        }
+
+        return resultado.toString();
+    }
+}
