@@ -1,0 +1,27 @@
+package tp.practicas;
+
+public class Magazine extends Resource {
+
+    private int issue;
+    private int year;
+
+    public Magazine(String code, String title, int issue, int year) {
+        super(code, title);
+        this.issue = issue;
+        this.year = year;
+    }
+
+    public int getIssue() {
+        return this.issue;
+    }
+
+    public int getYear() {
+        return this.year;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (nº %d, %d)",
+                super.toString(), this.issue, this.year);
+    }
+}
