@@ -1,0 +1,49 @@
+package tp.examen;
+import java.util.Objects;
+
+public abstract class Persona { //se me olvido el public 
+    
+    private String name;
+    private String id;
+    
+    
+    public Persona(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+    
+    public String getId() {
+        return this.id;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public abstract void EstadoActual();
+    
+    @Override
+    public boolean equals(Object o) {
+        
+        if (this == o) {
+            return true;
+        }
+        
+        if (o instanceof Persona p) {
+            if (this.id.equals(p.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+       return Objects.hash(id);
+       
+    }
+    
+    
+    
+    
+    
+}
