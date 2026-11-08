@@ -1,0 +1,86 @@
+public Station{
+    
+    List<ChargingPoint> puntos = new ArrayList<>();
+    
+    public void addPoint(ChargingPoint punto) {
+        
+        if (punto == null || findPoint(punto)) {
+            throw new IllegalArgumentException();
+        }
+        else {
+            puntos.add(punto);
+        }
+    }
+    
+    public ChargingPoint findPoint(String id) {
+        // como recibe un identfificador debemos recorrer no podemos hacer un contains
+        
+        for (ChargingPoint puntos: punto) {
+            if (punto.getId().equals(id)) {
+                return punto;
+            }
+        }
+        retur  null;
+    }
+    
+    public void removePoint(String id) {
+
+        ChargingPoint punto = findPoint(id);
+
+        if (punto == null) {
+        throw new IllegalArgumentException();
+        }
+
+        puntos.remove(punto);
+    }
+    
+    public List<ChargingPoint> removeDisabledPoints() {
+
+        List<ChargingPoint> eliminados = new ArrayList<>();
+
+        Iterator<ChargingPoint> it = puntos.iterator();
+
+        while (it.hasNext()) {
+
+            ChargingPoint punto = it.next();
+
+            if (!punto.isEnabled()) {
+                eliminados.add(punto);
+                it.remove();
+            }
+        }
+
+        return eliminados;
+    }
+    
+    public Collection<ChargingPoint> getPoints() {
+        return new ArrayList<>(puntos); //NOS PIDE COLLECTION, ARRAYLIST ES UNA COLLECTION
+    }
+    
+    public List<FastPoint> getEnabledFastPoints() {
+
+        List<FastPoint> rapidos = new ArrayList<>();
+
+        for (ChargingPoint punto : puntos) {
+
+            if (punto instanceof FastPoint && punto.isEnabled()) {
+                FastPoint libre = (FastPoint) punto; //casting
+                rapidos.add(libre);
+            }
+        }
+
+         return rapidos;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
