@@ -1,0 +1,19 @@
+
+package tp.practicas;
+
+public class FastPoint extends ChargingPoint {
+
+    public FastPoint(String id, double power) {
+        super(id, power);
+    }
+
+    @Override
+    public double chargingTime(double energy) {
+        return Tools.chargingTimeFast(energy, getPower());
+    }
+
+    @Override
+    public String toString() {
+        return "Fast " + super.toString();
+    }
+}
