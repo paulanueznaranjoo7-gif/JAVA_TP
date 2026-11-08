@@ -1,0 +1,26 @@
+package tp.examen;
+public class Cliente extends Persona{
+  
+    //guardar una referencia al vendedor dentro de cada cliente
+    Vendedor seller; //quitamos private para que sea accesible
+    private String object;
+    
+    public Cliente(String nameclient, String id, String object){
+        super(nameclient, id);
+        this.object = object
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s: %s", getName(), this.object)
+    }
+    
+    @Override //como estadoactaul esta declareado en persona y lo implemeto aqui uso override
+    public void EstadoActual() {
+        if (seller != null) {
+            System.out.printf("Atendido por %s%n", seller.getName());
+        } else {
+            System.out.println("No está siendo atendido");
+        }
+    }
+}
