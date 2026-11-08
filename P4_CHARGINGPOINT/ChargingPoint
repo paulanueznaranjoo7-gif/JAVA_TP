@@ -1,0 +1,65 @@
+public abstract ChargingPoint{
+    
+    private String id;
+    private double power;
+    private boolean isEnable;
+    
+    public ChargingPoint(String id, double power) {
+        this.id = id;
+        this.power = power;
+    }
+    
+    public String getId() {
+        return this.id;
+    }
+    
+    public double getPower() {
+        return this.power;
+    }
+    
+    public boolean isEnable() {
+        return isEnable;
+    }
+    
+    public boolean setEnable(boolean isEnable) {
+        return isEnable;
+    }
+    
+    public abstract double chargingTime(double energy); 
+    //metodos abstractos: no tiene cuerpo ni implementación
+    
+    public String toString() {
+        return String.format("ChargingPoint[id=%s, power=%d kw/h", this.id. this.power)
+    }
+    @Override
+    public boolean equals(Object o) {
+        
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof ChargingPoint c) {
+            if (this.id.equals(c.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
