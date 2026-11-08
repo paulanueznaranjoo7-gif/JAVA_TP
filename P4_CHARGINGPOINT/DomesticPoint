@@ -1,0 +1,19 @@
+
+package tp.practicas;
+
+public class DomesticPoint extends ChargingPoint {
+
+    public DomesticPoint(String id, double power) {
+        super(id, power);
+    }
+
+    @Override
+    public double chargingTime(double energy) {
+        return Tools.chargingTimeDomestic(energy, getPower());
+    }
+
+    @Override
+    public String toString() {
+        return "Domestic " + super.toString();
+    }
+}
