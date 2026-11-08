@@ -1,0 +1,109 @@
+package tp.examen;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Iterator;
+import java.util.TreeSet;
+import java.util.Comparator;
+
+
+public class Vendedor extends Persona{
+    
+    List<Cliente> clients = new ArrayList<>;
+    
+    public Vendedor(String nameseller, String id) {
+        super(nameseller, id);
+        
+    }
+    
+    public boolean isMember(Persona person) {
+        
+        if (person == null || !(clients.contains(person))) { //no hago casting xq realmete no se si person que le paso puede ser vendedor
+            return false;
+        }
+        else {
+            return true;
+        }
+        
+    }
+    
+    public boolean add(Persona person) {
+
+        if (!(person instanceof Cliente)) {
+            return false;
+        }
+
+        Cliente client = (Cliente) person;
+
+        if (isMember(client) || client.seller != null) {
+            return false;
+        }
+
+        clients.add(client);
+        client.seller = this;
+
+        return true;
+    ++}
+    
+    public boolean remove(String id) {
+        
+        Iterador<Cliente> it = new clientes.iterador();
+        
+        while (it.hasNext()) {
+            
+            Cliente client = it.next(); //ITTTT.next
+            
+            if (client.getId().equals(id)) {
+                remove.it();
+                client.seller = null //ya no tiene vendedor asignado
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public class ComparadorNombre implements Comparator<Persona> {
+
+    @Override
+    public int compare(Persona a, Persona b) {
+
+        int resultado = a.getName().compareTo(b.getName());
+
+        if (resultado != 0) {
+            return resultado;
+        }
+
+        return a.getId().compareTo(b.getId());
+    }
+    }
+    
+    public List<Persona> getClient() {
+
+    List<Persona> resultado = new ArrayList<>(clients);
+
+    resultado.sort(new ComparadorNombre());
+
+    return resultado;
+    }
+    
+    @Override
+    public void EstadoActual() {
+
+    List<Cliente> ordenados = new ArrayList<>(clients); //copio la lista
+
+    ordenados.sort(new ComparadorId());
+
+    StringBuilder result = new StringBuilder();
+
+    for (Cliente client : ordenados) {
+        result.append(client.toString());
+        result.append("\n");
+    }
+
+    System.out.print(result.toString());
+}
+    
+    
+    
+    
+    
+}
