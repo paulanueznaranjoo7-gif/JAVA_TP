@@ -1,4 +1,5 @@
 
+
 package tp.examen;
 
 import java.util.ArrayList;
@@ -111,10 +112,4 @@ public class Vendedor extends Persona {
 
         System.out.print(result.toString());
     }
-}
- 
-    
-    
-    
-    
 }
