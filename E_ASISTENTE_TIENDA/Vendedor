@@ -1,31 +1,28 @@
+
 package tp.examen;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
-import java.util.TreeSet;
 import java.util.Comparator;
 
+public class Vendedor extends Persona {
 
-public class Vendedor extends Persona{
-    
-    List<Cliente> clients = new ArrayList<>;
-    
+    private List<Cliente> clients = new ArrayList<>();
+
     public Vendedor(String nameseller, String id) {
         super(nameseller, id);
-        
     }
-    
+
     public boolean isMember(Persona person) {
-        
-        if (person == null || !(clients.contains(person))) { //no hago casting xq realmete no se si person que le paso puede ser vendedor
+
+        if (person == null || !clients.contains(person)) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
-        
     }
-    
+
     public boolean add(Persona person) {
 
         if (!(person instanceof Cliente)) {
@@ -42,73 +39,80 @@ public class Vendedor extends Persona{
         client.seller = this;
 
         return true;
-    ++}
-    
+    }
+
     public boolean remove(String id) {
-        
-        Iterador<Cliente> it = new clientes.iterador();
-        
+
+        Iterator<Cliente> it = clients.iterator();
+
         while (it.hasNext()) {
-            
-            Cliente client = it.next(); //ITTTT.next
-            
+
+            Cliente client = it.next();
+
             if (client.getId().equals(id)) {
-                remove.it();
-                client.seller = null //ya no tiene vendedor asignado
+                it.remove();
+                client.seller = null;
                 return true;
             }
         }
+
         return false;
     }
-    
-    public static class ComparadorNombre implements Comparator<Persona> {
 
-    @Override
-    public int compare(Persona a, Persona b) {
+    // Ordena por nombre y después por ID
+    private static class ComparadorNombre
+            implements Comparator<Persona> {
 
-        int resultado = a.getName().compareTo(b.getName());
+        @Override
+        public int compare(Persona a, Persona b) {
 
-        if (resultado != 0) {
-            return resultado;
+            int resultado = a.getName().compareTo(b.getName());
+
+            if (resultado != 0) {
+                return resultado;
+            }
+
+            return a.getId().compareTo(b.getId());
         }
+    }
 
-        return a.getId().compareTo(b.getId());
-    }
-    }
-    
     public List<Persona> getClient() {
 
-    List<Persona> resultado = new ArrayList<>(clients);
+        List<Persona> resultado = new ArrayList<>(clients);
 
-    resultado.sort(new ComparadorNombre());
+        resultado.sort(new ComparadorNombre());
 
-    return resultado;
+        return resultado;
     }
 
-    public static class ComparadorId implements Comparator<Persona>;
+    // Ordena solamente por ID
+    private static class ComparadorId
+            implements Comparator<Cliente> {
 
-    @Override
-    public int compare(Persona p2, Persona p2) {
-
-    return Integer
+        @Override
+        public int compare(Cliente p1, Cliente p2) {
+            return p1.getId().compareTo(p2.getId());
+        }
+    }
 
     @Override
     public void EstadoActual() {
 
-    List<Cliente> ordenados = new ArrayList<>(clients); //copio la lista
+        List<Cliente> ordenados = new ArrayList<>(clients);
 
-    ordenados.sort(new ComparadorId());
+        ordenados.sort(new ComparadorId());
 
-    StringBuilder result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
-    for (Cliente client : ordenados) {
-        result.append(client.toString());
-        result.append("\n");
+        for (Cliente client : ordenados) {
+            result.append(client.toString());
+            result.append("\n");
+        }
+
+        System.out.print(result.toString());
     }
-
-    System.out.print(result.toString());
 }
-    
+ 
     
     
     
