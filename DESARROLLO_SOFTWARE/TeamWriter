@@ -1,0 +1,14 @@
+package tp.examen;
+
+public class TeamWriter extends TeamMember {
+
+    public TeamWriter(String name) {
+        super(name);
+    }
+
+    @Override
+    public String getDuties() {
+        return String.format("%s,Redactar documentación",
+                super.toString());
+    }
+}
