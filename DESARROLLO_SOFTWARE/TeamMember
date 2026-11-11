@@ -1,0 +1,49 @@
+package tp.examen;
+
+/**
+ * Representa de forma genérica a un miembro
+ * de un equipo de desarrollo de software.
+ */
+public abstract class TeamMember {
+
+    private String name;
+    private int id;
+
+    /**
+     * Construye un miembro con un nombre
+     * y genera automáticamente su identificador.
+     *
+     * @param name nombre del miembro
+     */
+    public TeamMember(String name) {
+        this.name = name;
+        this.id = TeamMemberUtils.getUniqueId();
+    }
+
+    /**
+     * @return identificador del miembro
+     */
+    public int getId() {
+        return this.id;
+    }
+
+    /**
+     * @return nombre del miembro
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * @return identificador y nombre separados por una coma
+     */
+    @Override
+    public String toString() {
+        return String.format("%d,%s", this.id, this.name);
+    }
+
+    /**
+     * @return descripción de las funciones del miembro
+     */
+    public abstract String getDuties();
+}
