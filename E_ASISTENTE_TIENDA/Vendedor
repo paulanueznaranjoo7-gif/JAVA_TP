@@ -61,7 +61,7 @@ public class Vendedor extends Persona{
         return false;
     }
     
-    public class ComparadorNombre implements Comparator<Persona> {
+    public static class ComparadorNombre implements Comparator<Persona> {
 
     @Override
     public int compare(Persona a, Persona b) {
@@ -84,7 +84,14 @@ public class Vendedor extends Persona{
 
     return resultado;
     }
-    
+
+    public static class ComparadorId implements Comparator<Persona>;
+
+    @Override
+    public int compare(Persona p2, Persona p2) {
+
+    return Integer
+
     @Override
     public void EstadoActual() {
 
