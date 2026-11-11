@@ -1,0 +1,21 @@
+package tp.examen;
+
+public class TeamDeveloper extends TeamMember {
+
+    private String especiality;
+
+    public TeamDeveloper(String name, String especiality) {
+        super(name);
+        this.especiality = especiality;
+    }
+
+    public String getTechnology() {
+        return this.especiality;
+    }
+
+    @Override
+    public String getDuties() {
+        return String.format("%s,Desarrollo en %s",
+                super.toString(), this.especiality);
+    }
+}
