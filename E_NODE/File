@@ -1,0 +1,15 @@
+public class File extends Node{
+
+    public File(String name, String owner) {
+        super(name, owner);
+    }
+    
+    public String toString() {
+        return String.format("file:%s", super.toString());
+    }
+ 
+    public int getSize() { //Como implemento ese metodo, ya no es abstracto
+        return Tools.nodeSize(this); //hacemos this porque file hereda de node
+    }
+
+}
