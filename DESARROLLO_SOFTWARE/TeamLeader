@@ -1,0 +1,135 @@
+package tp.examen;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
+public class TeamLeader extends TeamMember {
+
+    private List<TeamMember> members = new ArrayList<>();
+
+    public TeamLeader(String name) {
+        super(name);
+    }
+
+    // Comprobar si un miembro pertenece al equipo
+    public boolean isMember(TeamMember member) {
+
+        if (member == null || !members.contains(member)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Añadir un desarrollador o redactor
+    public boolean add(TeamMember member) {
+
+        if (member == null) {
+            return false;
+        }
+
+        if (isMember(member)) {
+            return false;
+        }
+
+        if (member instanceof TeamDeveloper) {
+            members.add(member);
+            return true;
+        }
+
+        if (member instanceof TeamWriter) {
+            members.add(member);
+            return true;
+        }
+
+        return false;
+    }
+
+    // Eliminar un miembro por identificador
+    public boolean remove(int id) {
+
+        if (id < 0) {
+            return false;
+        }
+
+        Iterator<TeamMember> it = members.iterator();
+
+        while (it.hasNext()) {
+
+            TeamMember member = it.next();
+
+            if (member.getId() == id) {
+                it.remove();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Comparador: primero nombre y después ID
+    private static class ComparatorMember
+            implements Comparator<TeamMember> {
+
+        @Override
+        public int compare(TeamMember m1, TeamMember m2) {
+
+            int result = m1.getName().compareTo(m2.getName());
+
+            if (result != 0) {
+                return result;
+            }
+
+            return Integer.compare(m1.getId(), m2.getId());
+        }
+    }
+
+    // Devolver la lista ordenada, incluyendo al líder
+    public List<TeamMember> getMembers() {
+
+        List<TeamMember> membersordered =
+                new ArrayList<>(members);
+
+        membersordered.add(this);
+
+        membersordered.sort(new ComparatorMember());
+
+        return membersordered;
+    }
+
+    // Comparador: solamente por identificador
+    private static class ComparatorId
+            implements Comparator<TeamMember> {
+
+        @Override
+        public int compare(TeamMember m1, TeamMember m2) {
+            return Integer.compare(m1.getId(), m2.getId());
+        }
+    }
+
+    // Mostrar las funciones de los miembros del equipo
+    @Override
+    public String getDuties() {
+
+        if (members.isEmpty()) {
+            return "Equipo vacío";
+        }
+
+        List<TeamMember> ordenados =
+                new ArrayList<>(members);
+
+        ordenados.sort(new ComparatorId());
+
+        StringBuilder string =
+                new StringBuilder("Responsable de:\n");
+
+        for (TeamMember member : ordenados) {
+            string.append(member.getDuties());
+            string.append("\n");
+        }
+
+        return string.toString();
+    }
+}
