@@ -1,0 +1,110 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Comparator;
+
+public class TaskGroup extends GenericTask{
+    
+    List<GenericTask> tasklist = new ArrayList<>();
+    
+    public TaskGroup(String name) {
+        super(name);
+    }
+    
+    public boolean isMember(GenericTask task) {
+        
+        if (task == null || !(tasklist.contains(task))) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean add(GenericTask task) {
+        
+        if (task == null || (!(task instanceof SimpleTask) && !(task instanceof UrgentTask)) ||isMember(task)) {
+            return false;
+        }
+        tasklist.add(task);
+        return true;
+    }
+    
+    public boolean remove(int id) {
+        
+        Iterator<GenericTask> it =  tasklist.iterator();
+        
+        while (it.hasNext()) {
+            
+            GenericTask task = it.next();
+            
+            if (task.getId() == id) {
+                if (task.getId() < 0) {
+                    return false;
+                }
+                it.remove();
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
+    public static class NameTask implements Comparator<GenericTask> {
+        
+        @Override
+        public int compare(GenericTask t1, GenericTask t2) {
+            
+            int result = t1.getName().compareTo(t2.getName());
+            
+            if (result != 0) {
+                return result;
+            }
+            return Integer.compare(t1.getId(), t2.getId());
+            
+        }
+    }
+    public List<GenericTask> getTasks() {
+        
+        List<GenericTask> tasklistordered = new ArrayList<>(tasklist);
+        
+        tasklistordered.sort(new NameTask());
+        
+        tasklistordered.add(this);
+        
+        return tasklistordered;
+    }
+    
+    public static class CompareId implements Comparator<GenericTask> {
+        
+        @Override
+        public int compare(GenericTask t1, GenericTask t2) {
+            
+            return Integer.compare(t1.getId(), t2.getId());
+        }
+        
+    }
+    @Override
+    public void printStatus() {
+        
+        if (tasklist.size() == 0) {
+            System.out.print("sin tareas");
+        }
+        
+        List<GenericTask> tasklistid = new ArrayList<>(tasklist);
+        
+        tasklistid.sort(new CompareId());
+        
+        StringBuilder string = new StringBuilder("Tareas del grupo");
+        
+        for (GenericTask task : tasklistid) {
+            string.append(task.toString());
+            string.append("\n");
+        }
+        string.append(this.toString());
+        System.out.print(string.toString());
+    }
+    
+    
+    
+    
+    
+}
