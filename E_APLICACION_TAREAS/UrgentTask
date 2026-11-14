@@ -1,0 +1,18 @@
+public class UrgentTask extends GenericTask {
+    
+    private int frecuency;
+    
+    public UrgentTask(String name, int frecuency){
+        super(name);
+        this.frecuency = frecuency;
+    }
+    
+    public int getFrequency() {
+        return this.frecuency;
+    }
+    
+    public void printStatus() {
+        System.out.printf("%s, Urgente, %d", super.toString(), this.frecuency);
+    }
+    
+}
