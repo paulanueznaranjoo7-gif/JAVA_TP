@@ -1,0 +1,79 @@
+
+import java.util.*;
+
+public class UseTasks {
+
+    public static void main(String[] args) {
+
+        // Pruebas con SimpleTask
+        SimpleTask simpleTask = new SimpleTask("Tarea simple");
+
+        System.out.println("SimpleTask#toString() -> " + simpleTask);
+
+        simpleTask.setCompleted(true);
+
+        System.out.printf("SimpleTask#setCompleted(true) -> %s\n", simpleTask);
+
+        System.out.printf("SimpleTask#printStatus() -> \n\t");
+        simpleTask.printStatus();
+
+        System.out.println();
+
+        // Pruebas con UrgentTask
+        UrgentTask urgentTask = new UrgentTask("Tarea Urgente", 60);
+
+        System.out.printf("UrgentTask#getFrequency() -> %d\n",
+                          urgentTask.getFrequency());
+
+        System.out.printf("UrgentTask#printStatus() -> \n\t");
+        urgentTask.printStatus();
+
+        System.out.println();
+
+        // Pruebas con TaskGroup
+        TaskGroup group = new TaskGroup("ULPGC");
+
+        // - prueba método "add"
+        System.out.println("group#add(simpleTask) -> " + group.add(simpleTask));
+        System.out.println("group#add(urgentTask) -> " + group.add(urgentTask));
+
+        System.out.println();
+
+        // - prueba método "isMember"
+        System.out.println("\ngroup#isMember(simpleTask) -> "
+                           + group.isMember(simpleTask));
+
+        System.out.println("group#isMember(nonExistentTask) -> "
+                           + group.isMember(new SimpleTask("Tarea inexistente")));
+
+        System.out.println();
+
+        // - prueba método "remove"
+        System.out.println("group#remove(existentId) -> "
+                           + group.remove(simpleTask.getId()));
+
+        System.out.println("group#remove(nonExistentId) -> "
+                           + group.remove(1000));
+
+        group = new TaskGroup("ULPGC");
+
+        group.add(new SimpleTask("Prácticas Asign."));
+        group.add(new SimpleTask("Repasar Asign."));
+        group.add(new UrgentTask("Estudiar examen Asign.", 50));
+
+        System.out.println();
+
+        // - prueba método "getTasks"
+        List<GenericTask> tasks = group.getTasks();
+
+        System.out.println("Tareas ordenadas por nombre e id: ");
+
+        tasks.forEach(t -> System.out.println(t.getName() + "," + t.getId()));
+
+        // - prueba método "printStatus"
+        System.out.println();
+
+        System.out.println("Prueba #printStatus()");
+        group.printStatus();
+    }
+}
