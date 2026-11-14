@@ -1,0 +1,18 @@
+public class Player extends Unit{
+    
+    private String dorsal;
+    
+    public Player(int id, String name) {
+        super(id, name);
+        this.dorsal = Tools.assignDorsal(); //lo ponemos aqui porqe crea un dorsal nuevo para cada jugador
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s, (%s)", super.toString(), this.dorsal);
+    }
+    public int getTrainingHours() {
+        return Tools.getTrainingHours(this.dorsal); //this porque es el dorsal de esta clase
+    }
+    
+}
