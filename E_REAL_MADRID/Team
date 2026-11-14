@@ -1,0 +1,99 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
+public class Team extends Unit{
+    
+    List<Unit> members = new ArrayList<>();
+    
+    private Player coach;
+    
+    
+    public Team(int id, String name, Player coach){
+        super(id, name);
+        this.coach = coach;
+    }
+    
+    public boolean addUnit(Unit u) {
+        
+        if (u == null || hasUnit(u) || u == this) { //u = this, que un equipo no se añada a si mismo
+            return false;
+        }
+        
+         if (u instanceof Team) { //no quiero que un equipo se contenga a su mismo porwue seria un circulo vicioso
+            Team team1 = (Team) u;
+            if (team1.hasUnit(this)) {
+                return false;
+            }
+            
+        }
+        
+        members.add(u);
+        return true;
+        
+    }
+    
+    public boolean hasUnit(Unit u) {
+       
+        if (u == null) {
+           return true;
+        }
+        
+        //como es en profundidad, hacemos:
+        
+        for (Unit member : members) {
+            if (member == u) {
+                return true;
+            }
+            
+            if (member instanceof Team) {
+                Team team1 = (Team) member;
+                if (team1.hasUnit(u)) {
+                    return true;
+                }
+            }
+        }
+        
+        
+       return false;
+       
+    }
+    
+    public static class NameComparation implements Comparator<Unit> { //SE ME OLVIDO PONER CLASS
+        
+        @Override
+        public int compare(Unit u1, Unit u2) {
+            
+            int result = u1.getName().compareTo(u2.getName());
+            
+            if (result != 0) {
+                return result;
+            }
+            return Integer.compare(u1.getId(), u2.getId());
+        }
+    }
+    
+    public List<Unit> getUnitsByNameAndId() {
+        
+        List<Unit> unitby = new ArrayList(members);
+        
+        unitby.sort(new NameComparation());
+        
+        return unitby;
+    }
+    @Override
+    public int getTrainingHours() {
+        
+        int sum = this.coach.getTrainingHours();
+        
+        for (Unit member : members) {
+            sum += member.getTrainingHours();
+        }
+        return sum;
+    }
+    
+    
+    
+    
+    
+    
+}
