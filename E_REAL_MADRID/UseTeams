@@ -1,0 +1,87 @@
+import java.util.*;
+
+public class UseTeams {
+
+    public static void main(String[] args) {
+        probarClasePlayer();
+        probarAddUnit();
+        probarGetUnitsByNameAndId();
+        probarGetTrainingHours();
+    }
+
+    private static void probarClasePlayer() {
+        Player p1 = new Player(1, "Vinicius");
+        Player p2 = new Player(2, "Jude");
+
+        System.out.printf("- toString de Player: %s\n", p1.toString());
+        System.out.printf("- trainingHours() (ejemplo): %d\n", p1.getTrainingHours());
+    }
+
+    private static void probarAddUnit() {
+        Team primerEquipo = new Team(10, "Real Madrid",
+                                    new Player(99, "Xabi Alonso"));
+
+        Player p1 = new Player(7, "Rodrygo");
+
+        System.out.printf("- añade a Rodrygo (espero true): %s\n",
+                          primerEquipo.addUnit(p1));
+
+        System.out.printf("- añade otra vez a Rodrygo (espero false): %s\n",
+                          primerEquipo.addUnit(p1));
+
+        Team castilla = new Team(11, "Real Madrid Castilla",
+                                 new Player(100, "Raúl"));
+
+        Player p2 = new Player(17, "Arribas");
+        castilla.addUnit(p2);
+
+        primerEquipo.addUnit(castilla);
+
+        System.out.printf("- añadir Arribas a primerEquipo (espero false): %s\n",
+                          primerEquipo.addUnit(p2));
+    }
+
+    private static void probarGetUnitsByNameAndId() {
+        Team juveniles = new Team(20, "Juvenil A",
+                                  new Player(200, "Álvaro"));
+
+        Player py1 = new Player(23, "Mario");
+        Player py2 = new Player(22, "Mario");
+        Player py3 = new Player(25, "Diego");
+        Player py4 = new Player(24, "Diego");
+
+        juveniles.addUnit(py1);
+        juveniles.addUnit(py2);
+        juveniles.addUnit(py3);
+        juveniles.addUnit(py4);
+
+        System.out.println("\nUnidades ordenadas por nombre e id:");
+
+        for (Unit unit : juveniles.getUnitsByNameAndId()) {
+            System.out.printf("\t - %s\n", unit);
+        }
+    }
+
+    private static void probarGetTrainingHours() {
+        Team realMadrid = new Team(1, "Primer Equipo",
+                                   new Player(30, "Xabi"));
+
+        realMadrid.addUnit(new Player(7, "Vinicius"));
+
+        Team castilla = new Team(2, "Castilla",
+                                 new Player(40, "Raúl"));
+
+        castilla.addUnit(new Player(11, "Nico"));
+
+        Team juvenilA = new Team(3, "Juvenil A",
+                                 new Player(50, "Álvaro"));
+
+        juvenilA.addUnit(new Player(12, "David"));
+
+        realMadrid.addUnit(castilla);
+        realMadrid.addUnit(juvenilA);
+
+        System.out.printf("\n- Horas de entrenamiento totales: %d\n",
+                          realMadrid.getTrainingHours());
+    }
+}
