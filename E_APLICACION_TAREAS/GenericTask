@@ -1,0 +1,32 @@
+public abstract class GenericTask{
+    
+    private int id;
+    private String name;
+    private boolean state;
+    
+    public GenericTask(String name) {
+        this.name = name;
+        this.id = TaskUtils.getUniqueId();
+        this.state = false;
+    }
+    
+    public int getId() {
+        return this.id;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setCompleted(boolean state) {
+        this.state = state;
+    }
+    
+    public String toString() {
+        return String.format("%d,%s,%b", this.id, this.name, this.state);
+    }
+    
+    public abstract void printStatus();
+    
+    
+}
