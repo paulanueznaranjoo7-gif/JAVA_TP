@@ -1,0 +1,8 @@
+public class TaskUtils {
+
+    private static int nextId = 1;
+
+    public static int getUniqueId() {
+        return nextId++;
+    }
+}
