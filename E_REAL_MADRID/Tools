@@ -1,0 +1,18 @@
+
+public class Tools {
+
+    private static int nextDorsal = 1;
+
+    // Genera un dorsal único para cada jugador
+    public static String assignDorsal() {
+        String dorsal = "D" + nextDorsal;
+        nextDorsal++;
+        return dorsal;
+    }
+
+    // Devuelve las horas de entrenamiento de un jugador
+    public static int getTrainingHours(String dorsal) {
+        int numero = Integer.parseInt(dorsal.substring(1));
+        return 5 + numero;
+    }
+}
