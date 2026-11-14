@@ -23,7 +23,7 @@ public class Directory extends Node {
             return false;
         }
 
-        nodelist.add(node);
+        nodelist.add(node); //aquí no hace comprobar si el nodo ya existe en subniveles, no comporbaa que file no se contebga a siu mismo porque no es un contenedor
         return true;
     }
 
