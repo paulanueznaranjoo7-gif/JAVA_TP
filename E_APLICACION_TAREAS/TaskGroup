@@ -84,24 +84,22 @@ public class TaskGroup extends GenericTask{
     }
     @Override
     public void printStatus() {
-        
-        if (tasklist.size() == 0) {
-            System.out.print("sin tareas");
-        }
-        
-        List<GenericTask> tasklistid = new ArrayList<>(tasklist);
-        
-        tasklistid.sort(new CompareId());
-        
-        StringBuilder string = new StringBuilder("Tareas del grupo");
-        
-        for (GenericTask task : tasklistid) {
-            string.append(task.toString());
-            string.append("\n");
-        }
-        string.append(this.toString());
-        System.out.print(string.toString());
+
+    System.out.println("Tareas del Grupo " + getName() + ":");
+
+    if (tasklist.isEmpty()) {
+        System.out.println("(sin tareas)");
+        return;
     }
+
+    List<GenericTask> tasklistid = new ArrayList<>(tasklist);
+
+    tasklistid.sort(new CompareId());
+
+    for (GenericTask task : tasklistid) {
+        task.printStatus();
+    }
+}
     
     
     
