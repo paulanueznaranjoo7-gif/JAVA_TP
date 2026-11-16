@@ -1,0 +1,23 @@
+public class Subject extends AcademicUnit{
+    
+    private String code;
+    
+    public Subject(String title, String code){
+        super(title);
+        this.code = code;
+    }
+    
+    public String getCode() {
+        return this.code;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", super.toString(), this.code);
+    }
+    
+    @Override
+    public int getWeeklyHours(){
+        return Tools.getWeeklyHours(this.code);
+    }
+}
