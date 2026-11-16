@@ -1,0 +1,90 @@
+import java.util.*;
+public class StudyPlan extends AcademicUnit{
+    
+    List<AcademicUnit> studyplanlist = new ArrayList<>();
+    
+    public StudyPlan(String title){
+        super(title);
+    }
+    
+    public boolean isMember(AcademicUnit unit) {
+        
+        if (unit == null || !studyplanlist.contains(unit)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean add(AcademicUnit unit){
+        
+        if (unit == null | !(unit instanceof Subject) && !(unit instanceof ElectiveSubject) || isMember(unit)) {
+            return false;
+        }
+        studyplanlist.add(unit);
+        return true;
+    }
+    
+    public boolean removeById(int id) {
+        
+        Iterator<AcademicUnit> it = studyplanlist.iterator();
+        
+        while (it.hasNext()) {
+            
+            AcademicUnit unit = it.next();
+            
+            if (unit.getId() == id) {
+                it.remove();
+                return true;
+            }
+            
+        }
+        return false;
+
+    }
+    
+    public List<AcademicUnit> getSubjectsSorted() {
+        
+        List<AcademicUnit> ordered = new ArrayList<>(studyplanlist);
+        
+        ordered.sort((a, b) -> {
+        
+        int result = a.getTitle().compareTo(b.getTitle());
+        
+        if (result != 0) {
+            return result; //return lambda
+        }
+        return Integer.compare(a.getId(), b.getId()); //return lamda
+    
+        });
+        return ordered; //return metodo
+        
+        //sort() puede llamar a la lambda muchas veces hasta terminar de ordenar la lista.
+        //Después: cuando sort() termina, Java continúa ejecutando la siguiente línea
+    }
+    
+    public Set<String> getTitles(){
+        
+        Set<String> subjecttitles = new HashSet<>();
+        
+        for (AcademicUnit unit: studyplanlist) {
+            subjecttitles.add(unit.getTitle());
+        }
+        return subjecttitles;
+    }
+    
+    public int getWeeklyHours() {
+        
+        int sum = 0;
+        
+        for (AcademicUnit unit : studyplanlist) {
+            sum += unit.getWeeklyHours();
+        }
+        return sum;
+    }
+}
+
+
+
+
+
+
