@@ -1,0 +1,19 @@
+public class Person extends Unit{
+    
+    private String code;
+    
+    public Person(int id, String name) {
+        super(id, name);
+        this.code = Tools.createEmployeeCode();
+    }
+    
+    @Override
+    public String toString(){
+        return String.format("%s(%s)", super.toString(), this.code);
+    }
+    
+    @Override
+    public int getAssignedHours() {
+        return Tools.getAssignedHours(this.code); //no le paso nada, arriba, solo abajo le paso un this
+    }
+}
