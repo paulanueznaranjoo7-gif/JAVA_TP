@@ -1,0 +1,180 @@
+
+import java.util.*;
+
+public class UseStudyPlan {
+
+    public static void main(String[] args) {
+
+        probarSubject();
+        probarElectiveSubject();
+        probarAdd();
+        probarRemoveById();
+        probarGetSubjectsSorted();
+        probarGetTitles();
+        probarGetWeeklyHours();
+    }
+
+    // PRUEBA 1: Subject
+    private static void probarSubject() {
+
+        System.out.println("\n=== PRUEBA SUBJECT ===");
+
+        Subject s1 = new Subject("Matematicas I", "MAT");
+
+        System.out.println("toString: " + s1);
+        System.out.println("ID: " + s1.getId());
+        System.out.println("Titulo: " + s1.getTitle());
+        System.out.println("Codigo: " + s1.getCode());
+        System.out.println("Horas (espero 4): " + s1.getWeeklyHours());
+    }
+
+    // PRUEBA 2: ElectiveSubject
+    private static void probarElectiveSubject() {
+
+        System.out.println("\n=== PRUEBA ELECTIVE SUBJECT ===");
+
+        ElectiveSubject e1 =
+            new ElectiveSubject("Inteligencia Artificial", 3);
+
+        System.out.println("toString: " + e1);
+        System.out.println("Horas (espero 3): " + e1.getWeeklyHours());
+    }
+
+    // PRUEBA 3: add e isMember
+    private static void probarAdd() {
+
+        System.out.println("\n=== PRUEBA ADD ===");
+
+        StudyPlan plan = new StudyPlan("Informatica");
+
+        Subject s1 = new Subject("Programacion I", "PROG");
+        Subject s2 = new Subject("Matematicas I", "MAT");
+
+        System.out.println("Añadir s1 (espero true): "
+                           + plan.add(s1));
+
+        System.out.println("Añadir s2 (espero true): "
+                           + plan.add(s2));
+
+        System.out.println("Añadir otra vez s1 (espero false): "
+                           + plan.add(s1));
+
+        System.out.println("Añadir null (espero false): "
+                           + plan.add(null));
+
+        StudyPlan otro = new StudyPlan("Otro plan");
+
+        System.out.println("Añadir StudyPlan (espero false): "
+                           + plan.add(otro));
+
+        System.out.println("isMember(s1) (espero true): "
+                           + plan.isMember(s1));
+
+        System.out.println("isMember(otro) (espero false): "
+                           + plan.isMember(otro));
+    }
+
+    // PRUEBA 4: removeById
+    private static void probarRemoveById() {
+
+        System.out.println("\n=== PRUEBA REMOVE ===");
+
+        StudyPlan plan = new StudyPlan("Informatica");
+
+        Subject s1 = new Subject("Matematicas I", "MAT");
+        Subject s2 = new Subject("Programacion I", "PROG");
+
+        plan.add(s1);
+        plan.add(s2);
+
+        System.out.println("Eliminar s1 (espero true): "
+                           + plan.removeById(s1.getId()));
+
+        System.out.println("Eliminar otra vez s1 (espero false): "
+                           + plan.removeById(s1.getId()));
+
+        System.out.println("Eliminar id negativo (espero false): "
+                           + plan.removeById(-1));
+    }
+
+    // PRUEBA 5: getSubjectsSorted
+    private static void probarGetSubjectsSorted() {
+
+        System.out.println("\n=== PRUEBA ORDENACION ===");
+
+        StudyPlan plan = new StudyPlan("Informatica");
+
+        Subject s1 = new Subject("Programacion", "PROG");
+        Subject s2 = new Subject("Matematicas", "MAT");
+        Subject s3 = new Subject("Programacion", "BD");
+        ElectiveSubject e1 =
+            new ElectiveSubject("Inteligencia Artificial", 3);
+
+        plan.add(s1);
+        plan.add(s2);
+        plan.add(s3);
+        plan.add(e1);
+
+        System.out.println("Asignaturas ordenadas por titulo e ID:");
+
+        List<AcademicUnit> ordenadas = plan.getSubjectsSorted();
+
+        for (AcademicUnit unit : ordenadas) {
+            System.out.println(unit);
+        }
+
+        // Comprobar que la lista es independiente
+        ordenadas.clear();
+
+        System.out.println("Tamaño del plan tras borrar la copia (espero 4): "
+                           + plan.getSubjectsSorted().size());
+    }
+
+    // PRUEBA 6: getTitles
+    private static void probarGetTitles() {
+
+        System.out.println("\n=== PRUEBA SET DE TITULOS ===");
+
+        StudyPlan plan = new StudyPlan("Informatica");
+
+        Subject s1 = new Subject("Programacion", "PROG");
+        Subject s2 = new Subject("Matematicas", "MAT");
+        Subject s3 = new Subject("Programacion", "BD");
+
+        plan.add(s1);
+        plan.add(s2);
+        plan.add(s3);
+
+        Set<String> titulos = plan.getTitles();
+
+        System.out.println("Títulos sin repetir:");
+
+        for (String titulo : titulos) {
+            System.out.println(titulo);
+        }
+
+        System.out.println("Numero de titulos distintos (espero 2): "
+                           + titulos.size());
+    }
+
+    // PRUEBA 7: getWeeklyHours
+    private static void probarGetWeeklyHours() {
+
+        System.out.println("\n=== PRUEBA HORAS SEMANALES ===");
+
+        StudyPlan plan = new StudyPlan("Informatica");
+
+        Subject s1 = new Subject("Matematicas", "MAT");
+        Subject s2 = new Subject("Programacion", "PROG");
+        ElectiveSubject e1 =
+            new ElectiveSubject("Inteligencia Artificial", 3);
+
+        plan.add(s1);
+        plan.add(s2);
+        plan.add(e1);
+
+        System.out.println("Horas totales (espero 13): "
+                           + plan.getWeeklyHours());
+    }
+}
+
