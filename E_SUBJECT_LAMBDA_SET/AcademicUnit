@@ -1,0 +1,25 @@
+public abstract class AcademicUnit{
+    
+    private int id;
+    private String title;
+    
+    public AcademicUnit(String title){
+        this.title = title;
+        this.id = Tools.getUniqueId();
+    }
+    
+    public int getId() {
+        return this.id;
+    }
+    
+    public String getTitle() {
+        return this.title;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("#%d - %s", this.id, this.title);
+    }
+    
+    public abstract int getWeeklyHours();
+}
