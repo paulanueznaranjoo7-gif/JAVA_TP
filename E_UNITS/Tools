@@ -1,0 +1,17 @@
+
+public class Tools {
+
+    private static int nextCode = 1;
+
+    // Crea un código único para cada empleado
+    public static String createEmployeeCode() {
+        String code = String.format("E%02d", nextCode);
+        nextCode++;
+        return code;
+    }
+
+    // Devuelve las horas asignadas a proyectos de innovación
+    public static int getAssignedHours(String code) {
+        return 5;
+    }
+}
