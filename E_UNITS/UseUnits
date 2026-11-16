@@ -1,0 +1,110 @@
+
+import java.util.*;
+
+public class UseUnits {
+
+    public static void main(String[] args) {
+
+        probarClasePerson();
+        probarAddUnit();
+        probarRemoveByName();
+        probarGetUnitsByNameAndId();
+        probarGetAssignedHours();
+    }
+
+    private static void probarClasePerson() {
+
+        Person p1 = new Person(1, "Mark");
+        Person p2 = new Person(2, "Alice");
+
+        System.out.printf("- toString de Person:%s\n", p1.toString());
+        System.out.printf("- assignedHours() (espero 5): %d\n",
+                          p1.getAssignedHours());
+    }
+
+    private static void probarAddUnit() {
+
+        Section root = new Section(11, "Desarrollo",
+                                   new Person(1, "CompanyHead"));
+
+        System.out.printf("\n- añade unidad nula (espero false): %s\n",
+                          root.addUnit(null));
+
+        Person p1 = new Person(2, "Alice");
+
+        System.out.printf("- añade a Alice (espero true): %s\n",
+                          root.addUnit(p1));
+
+        System.out.printf("- añade otra vez a Alice (espero false): %s\n",
+                          root.addUnit(p1));
+    }
+
+    private static void probarRemoveByName() {
+
+        Section section = new Section(10, "Sección Java",
+                                      new Person(20, "Head"));
+
+        Person j1 = new Person(12, "Alice");
+        Person j2 = new Person(14, "Bob");
+        Person j3 = new Person(13, "Alice");
+        Person j4 = new Person(15, "Charlie");
+
+        section.addUnit(j1);
+        section.addUnit(j2);
+        section.addUnit(j3);
+        section.addUnit(j4);
+
+        System.out.printf(
+            "\n- Eliminar todas las unidades con nombre 'Alice' (espero 2): %d\n",
+            section.removeByName("Alice")
+        );
+    }
+
+    private static void probarGetUnitsByNameAndId() {
+
+        Section python = new Section(20, "Sección Python",
+                                     new Person(21, "Head"));
+
+        Person py1 = new Person(23, "Alice");
+        Person py2 = new Person(22, "Alice");
+        Person py3 = new Person(25, "Bob");
+        Person py4 = new Person(24, "Bob");
+
+        python.addUnit(py1);
+        python.addUnit(py2);
+        python.addUnit(py3);
+        python.addUnit(py4);
+
+        System.out.println("\nUnidades ordenadas por nombre e id:");
+
+        for (Unit unit : python.getUnitsByNameAndId()) {
+            System.out.printf("\t - %s\n", unit);
+        }
+    }
+
+    private static void probarGetAssignedHours() {
+
+        Section root = new Section(1, "Sección Desarrollo",
+                                   new Person(21, "Head"));
+
+        root.addUnit(new Person(2, "Mark"));
+
+        Section javaSection = new Section(3, "Sección Java",
+                                          new Person(22, "JavaHead"));
+
+        javaSection.addUnit(new Person(4, "Alice"));
+
+        Section pythonSection = new Section(5, "Sección Python",
+                                            new Person(23, "PythonHead"));
+
+        pythonSection.addUnit(new Person(6, "Bob"));
+
+        root.addUnit(javaSection);
+        root.addUnit(pythonSection);
+
+        System.out.printf(
+            "\n- Horas asignadas a investigación (espero 30): %d\n",
+            root.getAssignedHours()
+        );
+    }
+}
