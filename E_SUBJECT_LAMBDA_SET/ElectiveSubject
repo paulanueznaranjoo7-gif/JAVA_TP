@@ -1,0 +1,19 @@
+public class ElectiveSubject extends AcademicUnit{
+    
+    private int hours;
+    
+    public ElectiveSubject(String title, int hours){
+        super(title);
+        this.hours = this.hours;
+    }
+    
+    @Override
+    public String toString(){
+        return String.format("%s(Optativa)", super.toString());
+    }
+    
+    @Override
+    public int getWeeklyHours(){
+        return this.hours; //ya tengo las horas, no uso eso
+    }
+}
