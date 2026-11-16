@@ -1,0 +1,87 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Collection;
+import java.util.Comparator;
+
+public class Section extends Unit{
+    
+    
+    List<Unit> listUnit = new ArrayList<>();
+    private Person boss;
+    
+    public Section(int id, String name, Person boss){
+        super(id, name);
+        this.boss = boss;
+    }
+    
+    public boolean addUnit(Unit u) {
+        
+        if (u == null || u.getName().equals("") || listUnit.contains(u)) {//puedo usar este equals aunque no hya definico nada antes? queda mal? pregunta para profe
+            return false;
+        }
+        listUnit.add(u);
+        return true;
+    }
+    
+    public int removeByName(String name) {
+        
+        int unitdeleted = 0;
+        
+        Iterator<Unit> it = listUnit.iterator();
+        
+        while (it.hasNext()) {
+            
+            Unit point = it.next();
+            
+            if (point.getName().equals(name)) {
+                unitdeleted += 1;
+                it.remove();
+            }
+            
+        }
+        return unitdeleted;
+        
+        
+    }
+    
+    public static class NameComparator implements Comparator<Unit> {
+        
+        @Override
+        public int compare(Unit u1, Unit u2) {
+            
+            int result = u1.getName().compareTo(u2.getName());
+            
+            if (result != 0) {
+                return result;
+            }
+            return Integer.compare(u1.getId(), u2.getId());
+        }
+    }
+    
+    
+    public Collection<Unit> getUnitsByNameAndId() {
+        
+        List<Unit> listUnitordered = new ArrayList<>(listUnit);
+        
+        listUnitordered.sort(new NameComparator());
+        
+        return listUnitordered;
+    }
+    
+    public int getAssignedHours() {
+        
+        int sum = this.boss.getAssignedHours(); //xq persona tiene un metodo que es assigbedhours
+        
+        for (Unit unit: listUnit) {
+            sum += unit.getAssignedHours(); //unit hereda eso, claro
+        }
+        return sum;
+    }
+    
+    
+    
+    
+    
+    
+}
