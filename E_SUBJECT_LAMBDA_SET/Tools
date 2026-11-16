@@ -1,0 +1,31 @@
+
+public class Tools {
+
+    private static int nextId = 1;
+
+    // Genera un identificador único
+    public static int getUniqueId() {
+        return nextId++;
+    }
+
+    // Devuelve las horas semanales según el código
+    public static int getWeeklyHours(String code) {
+
+        switch (code) {
+            case "MAT":
+                return 4;
+
+            case "PROG":
+                return 6;
+
+            case "ING":
+                return 3;
+
+            case "BD":
+                return 5;
+
+            default:
+                return 2;
+        }
+    }
+}
