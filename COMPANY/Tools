@@ -1,0 +1,20 @@
+
+public class Tools {
+
+    private static int nextId = 1;
+    private static int nextEmployeeCode = 1;
+
+    public static int getUniqueId() {
+        return nextId++;
+    }
+
+    public static String createEmployeeCode() {
+        String code = String.format("E%02d", nextEmployeeCode);
+        nextEmployeeCode++;
+        return code;
+    }
+
+    public static int getEmployeeHours(String code) {
+        return 5;
+    }
+}
