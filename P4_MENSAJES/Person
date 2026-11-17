@@ -1,0 +1,20 @@
+public class Person extends Contact{
+    
+    private String phone;
+
+    public Person(String name, String phone) {
+        super(name);
+        this.phone = phone;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s:%s", getName(), this.phone);
+    }
+    
+    public void sendSMS(String message) {
+        SMSTools.sendMessage(phone, message); //es void no uso return
+    }
+    
+}
+
