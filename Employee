@@ -1,0 +1,22 @@
+public class Employee extends CompanyUnit{
+    
+    private String code;
+    
+    public Employee(String name){
+        super(name);
+        this.code = Tools.createEmployeeCode();
+    }
+    
+    public String getCode() {
+        return this.code;
+    }
+    @Override
+    public String toString() {
+        return String.format("%s(%s)", super.toString(), this.code);
+    }
+    
+    @Override
+    public int getWeeklyHours() {
+        return Tools.getEmployeeHours(code);
+    }
+}
