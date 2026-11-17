@@ -1,0 +1,64 @@
+public abstract class CompanyUnit{
+    
+    /**
+     * Representa cualquier unidad de la empresa
+     * Clase padre de Employee, Consultant, Departament
+    */
+    
+    private int id;
+    private String name;
+    
+    /**
+     * Construye una unidad 
+     * 
+     * @param name 
+    */
+    
+    public CompanyUnit(String name){
+        this.name = name;
+        this.id = Tools.getUniqueId();
+    }
+    
+    /**
+     * Obtiene id
+     * 
+     * @return id de cada unidad
+    */
+    
+    
+    public int getId() {
+        return this.id;
+    }
+    
+    /**
+     * Obtiene el name
+     * 
+     * @return name de cada unidad
+    */
+    
+    public String getName(){
+        return this.name;
+    }
+    
+      /**
+     * Representación textual de una unidad
+     * 
+     * @return name y id de cada unidad
+    */
+    
+    @Override
+    public String toString() {
+        return String.format("#%d - %s", this.id, this.name);
+    }
+    
+      /**
+     * Obtiene numero de horas de la semana trabajadas
+     * 
+     * @return horas trabajadas a la semana
+    */
+    
+    public abstract int getWeeklyHours();
+
+}
+
+
