@@ -1,0 +1,15 @@
+
+public class SMSTools {
+
+    private static int nextId = 1;
+
+    // Genera un identificador único para cada contacto
+    public static int getUniqueId() {
+        return nextId++;
+    }
+
+    // Simula el envío de un SMS
+    public static void sendMessage(String phone, String message) {
+        System.out.printf("SMS enviado al %s: %s%n", phone, message);
+    }
+}
