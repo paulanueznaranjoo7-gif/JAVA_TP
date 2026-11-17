@@ -1,0 +1,119 @@
+import java.util.*;
+
+public class Department extends CompanyUnit{
+    
+    List<CompanyUnit> units = new ArrayList<>();
+    
+    public Department(String name){
+        super(name);
+    }
+    
+    public boolean hasUnit(CompanyUnit unit) {
+
+    if (unit == null) {
+        return false;
+    }
+
+    for (CompanyUnit current : units) {
+
+        if (current == unit) {
+            return true;
+        }
+
+        if (current instanceof Department) {
+
+            Department department = (Department) current;
+
+            if (department.hasUnit(unit)) {
+                return true;
+            }
+            // Aquí debes llamar recursivamente a hasUnit()
+            // sobre department y buscar unit.
+
+        }
+    }
+
+    return false;
+    }
+    
+    public boolean addUnit(CompanyUnit unit) {
+        
+        if (unit == null || unit.getName().equals("") || unit == this || hasUnit(unit)) {
+            return false;
+        }
+        if (unit instanceof Department) {
+    Department department = (Department) unit;
+
+    if (department.hasUnit(this)) {
+        return false;
+    }
+}
+        units.add(unit);
+        return true;
+    }
+    
+    public boolean removeById(int id) {
+        
+        Iterator<CompanyUnit> it = units.iterator();
+        
+        while (it.hasNext()) {
+            
+            CompanyUnit point = it.next();
+            
+            if (point.getId() == id) {
+                it.remove();
+                return true;
+            }
+            
+        }
+        return false;
+        
+    }
+    
+    public List<CompanyUnit> getUnitsSorted() {
+        
+        List<CompanyUnit> ordered = new ArrayList<>(units);
+        
+        ordered.sort((a, b) -> {
+        
+        int result = a.getName().compareTo(b.getName());
+        
+        if (result != 0) {
+            return result;
+        }
+        return Integer.compare(a.getId(), b.getId());
+        
+        });
+        return ordered;
+    }
+    
+    public Set<String> getEmployeeNames() {
+        
+        Set<String> names = new HashSet<>();
+        
+        for (CompanyUnit unit : units) {
+            names.add(unit.getName());
+        }
+        return names;
+        
+    }
+    
+    public int getWeeklyHours() {
+        
+        int sum = 0;
+        
+        for (CompanyUnit unit: units){
+            sum += unit.getWeeklyHours();
+        }
+        return sum;
+    }
+    
+}
+
+
+
+
+
+
+
+
