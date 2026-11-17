@@ -1,0 +1,102 @@
+import java.util.*;
+public class Group extends Contact{
+    
+    List<Contact> contactlist = new ArrayList<>();
+
+
+    public Group(String name) {
+        super(name);
+    }
+    
+    public boolean isMember(int id) {
+        
+        for (Contact con: contactlist) {
+            
+            if (con.getId() == id) {
+                return true;
+            }
+            
+            if (con instanceof Group) {
+                Group group1 = (Group) con;
+                if (group1.isMember(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+        
+    }
+    
+    public boolean add(Contact con) {
+        
+        if (con == null || this == con || this.isMember(con.getId())) {
+            return false;
+        }
+        
+        for (Contact contac : contactlist) {
+            if (con instanceof Group) {
+                Group free = (Group) contac;
+                if (free.isMember(this.getId()));
+                return false;
+            }
+        }
+        contactlist.add(con);
+        return true;
+    }
+    
+    public boolean remove(int id) {
+        
+        Iterator<Contact> it = contactlist.iterator();
+        
+        while (it.hasNext()) {
+            
+            Contact point = it.next();
+            
+            if (point.getId() == id) {
+                it.remove();
+                return true;
+            }
+        }
+        return false;
+        
+        
+    }
+    
+    public List<Contact> getContacts() {
+        
+        List<Contact> ordered = new ArrayList<>();
+        
+        ordered.sort((a, b) -> {
+        
+        return Integer.compare(a.getId(), b.getId());
+        
+        });
+        return ordered;
+    }
+    
+    @Override
+    public String toString() {
+        
+        StringBuilder string = new StringBuilder(this.getName());
+        
+        for (Contact con : contactlist) {
+            string.append("\n");
+            string.append(con.getName());
+        }
+        return string.toString();
+    }
+    
+    @Override
+    public void sendSMS(String message) {
+
+        for (Contact con : contactlist) {
+            con.sendSMS(message);
+        }
+    }
+    
+    
+    
+    
+}
+
+
