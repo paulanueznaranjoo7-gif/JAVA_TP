@@ -1,0 +1,212 @@
+
+import java.util.*;
+
+public class UseCompany {
+
+    public static void main(String[] args) {
+
+        probarClases();
+        probarAddUnit();
+        probarRemoveById();
+        probarGetUnitsSorted();
+        probarGetEmployeeNames();
+        probarGetWeeklyHours();
+    }
+
+    private static void probarClases() {
+
+        System.out.println("\n=== PRUEBA CLASES ===");
+
+        Employee e = new Employee("Ana");
+        Consultant c = new Consultant("Marta", 8);
+
+        System.out.println("Employee: " + e);
+        System.out.println("Codigo: " + e.getCode());
+        System.out.println("Horas empleado (espero 5): "
+                           + e.getWeeklyHours());
+
+        System.out.println("Consultant: " + c);
+        System.out.println("Horas consultor (espero 8): "
+                           + c.getWeeklyHours());
+    }
+
+    private static void probarAddUnit() {
+
+        System.out.println("\n=== PRUEBA ADD UNIT ===");
+
+        Department tecnologia = new Department("Tecnologia");
+        Department desarrollo = new Department("Desarrollo");
+        Department inteligencia = new Department("IA");
+
+        Employee ana = new Employee("Ana");
+        Employee luis = new Employee("Luis");
+        Consultant marta = new Consultant("Marta", 8);
+
+        System.out.println("Añadir Ana (espero true): "
+                           + tecnologia.addUnit(ana));
+
+        System.out.println("Añadir Ana otra vez (espero false): "
+                           + tecnologia.addUnit(ana));
+
+        System.out.println("Añadir null (espero false): "
+                           + tecnologia.addUnit(null));
+
+        System.out.println("Añadir nombre vacio (espero false): "
+                           + tecnologia.addUnit(
+                               new Employee("")
+                           ));
+
+        desarrollo.addUnit(luis);
+        desarrollo.addUnit(marta);
+        desarrollo.addUnit(inteligencia);
+
+        System.out.println("Añadir Desarrollo (espero true): "
+                           + tecnologia.addUnit(desarrollo));
+
+        System.out.println("Buscar Luis en profundidad (espero true): "
+                           + tecnologia.hasUnit(luis));
+
+        System.out.println("Añadir Luis otra vez (espero false): "
+                           + tecnologia.addUnit(luis));
+
+        System.out.println("Añadir tecnologia a si misma (espero false): "
+                           + tecnologia.addUnit(tecnologia));
+
+        System.out.println("Crear ciclo (espero false): "
+                           + inteligencia.addUnit(tecnologia));
+
+        // Comprobar duplicados dentro de departamentos
+        // que ya tienen contenido
+        Department otro = new Department("Otro");
+        otro.addUnit(luis);
+
+        System.out.println("Añadir subarbol con Luis repetido (espero false): "
+                           + tecnologia.addUnit(otro));
+    }
+
+    private static void probarRemoveById() {
+
+        System.out.println("\n=== PRUEBA REMOVE ===");
+
+        Department departamento = new Department("Sistemas");
+
+        Employee ana = new Employee("Ana");
+        Employee luis = new Employee("Luis");
+
+        departamento.addUnit(ana);
+        departamento.addUnit(luis);
+
+        System.out.println("Eliminar Ana (espero true): "
+                           + departamento.removeById(ana.getId()));
+
+        System.out.println("Eliminar otra vez Ana (espero false): "
+                           + departamento.removeById(ana.getId()));
+
+        System.out.println("Eliminar ID negativo (espero false): "
+                           + departamento.removeById(-1));
+
+        System.out.println("Luis sigue dentro (espero true): "
+                           + departamento.hasUnit(luis));
+    }
+
+    private static void probarGetUnitsSorted() {
+
+        System.out.println("\n=== PRUEBA ORDENACION ===");
+
+        Department departamento = new Department("Desarrollo");
+
+        Employee e1 = new Employee("Pedro");
+        Employee e2 = new Employee("Ana");
+        Employee e3 = new Employee("Pedro");
+        Consultant c1 = new Consultant("Marta", 6);
+
+        departamento.addUnit(e1);
+        departamento.addUnit(e2);
+        departamento.addUnit(e3);
+        departamento.addUnit(c1);
+
+        System.out.println("Unidades ordenadas por nombre e ID:");
+
+        List<CompanyUnit> ordenadas =
+            departamento.getUnitsSorted();
+
+        for (CompanyUnit unit : ordenadas) {
+            System.out.println(unit);
+        }
+
+        ordenadas.clear();
+
+        System.out.println("Tamaño original (espero 4): "
+                           + departamento.getUnitsSorted().size());
+    }
+
+    private static void probarGetEmployeeNames() {
+
+        System.out.println("\n=== PRUEBA SET ===");
+
+        Department principal = new Department("Principal");
+        Department desarrollo = new Department("Desarrollo");
+        Department ia = new Department("IA");
+
+        Employee ana1 = new Employee("Ana");
+        Employee luis = new Employee("Luis");
+        Employee ana2 = new Employee("Ana");
+        Employee pedro = new Employee("Pedro");
+
+        Consultant marta = new Consultant("Marta", 8);
+
+        principal.addUnit(ana1);
+        desarrollo.addUnit(luis);
+        desarrollo.addUnit(ana2);
+        desarrollo.addUnit(marta);
+        ia.addUnit(pedro);
+
+        desarrollo.addUnit(ia);
+        principal.addUnit(desarrollo);
+
+        Set<String> nombres = principal.getEmployeeNames();
+
+        System.out.println("Nombres de empleados:");
+
+        for (String name : nombres) {
+            System.out.println(name);
+        }
+
+        System.out.println("Nombres distintos (espero 3): "
+                           + nombres.size());
+
+        System.out.println("Contiene Ana (espero true): "
+                           + nombres.contains("Ana"));
+
+        System.out.println("Contiene Marta (espero false): "
+                           + nombres.contains("Marta"));
+    }
+
+    private static void probarGetWeeklyHours() {
+
+        System.out.println("\n=== PRUEBA HORAS ===");
+
+        Department principal = new Department("Tecnologia");
+        Department desarrollo = new Department("Desarrollo");
+        Department ia = new Department("IA");
+
+        Employee ana = new Employee("Ana");
+        Employee luis = new Employee("Luis");
+        Employee pedro = new Employee("Pedro");
+
+        Consultant marta = new Consultant("Marta", 8);
+
+        principal.addUnit(ana);
+
+        desarrollo.addUnit(luis);
+        desarrollo.addUnit(marta);
+
+        ia.addUnit(pedro);
+
+        desarrollo.addUnit(ia);
+        principal.addUnit(desarrollo);
+
+        System.out.println("Horas totales (espero 23): "
+                           + principal.getWeeklyHours());
+    }
+}
