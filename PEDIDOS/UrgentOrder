@@ -1,0 +1,19 @@
+public class UrgentOrder extends Order{
+    
+    private int minutes;
+    
+    public UrgentOrder(String id, String name, String costumer, int minutes){
+        super(id, name, costumer);
+        this.minutes = minutes;
+    }
+    
+    public int getMinutes() {
+        return this.minutes;
+    }
+    
+    public int getPreparationMinutes(){
+        return this.minutes;
+    }
+}
+
+
