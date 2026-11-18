@@ -1,0 +1,106 @@
+import java.util.*;
+   
+public class OrderRegister{
+    
+    List<Order> orderlist = new ArrayList<>();
+
+    public OrderRegister() {};
+    
+    public boolean add(Order order) {
+        
+        if (order == null || order.getName().equals("") || orderlist.contains(order)) {
+            return false;
+        }
+        orderlist.add(order);
+        return true;
+        
+    }
+    
+    public boolean removeById(String id) {
+        
+        Iterator<Order> it = orderlist.iterator();
+        
+        while (it.hasNext()) {
+            
+            Order point = it.next();
+            
+            if (point.getId().equals(id)) {
+                it.remove();
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
+    public List<Order> getOrders() {
+        
+        List<Order> newlist = new ArrayList<>(orderlist);
+        return newlist;
+        
+    }
+    
+    public List<Order> getOrdersSorted() {
+        
+        List<Order> ordered = new ArrayList<>(orderlist);
+        
+        ordered.sort((a, b ) -> {
+        
+        int result = a.getName().compareTo(b.getName());
+        
+        if (result != 0) {
+            return result;
+        }
+        
+        return a.getId().compareTo(b.getId());
+        
+        });
+        
+        return ordered;
+    }
+    
+    public Set<String> getCustomerNames() {
+        
+        Set<String> namescostumer = new HashSet<>();
+        
+        for (Order ord: orderlist) {
+            namescostumer.add(ord.getCostumer());
+        }
+        return namescostumer;
+        
+    }
+    
+    public List<Order> getPendingOrders() {
+        
+        List<Order> uncompletedorders = new ArrayList<>();
+        
+        for (Order ord: orderlist) {
+            if (!(ord.isCompleted())) {
+                uncompletedorders.add(ord);
+            }
+        }
+        return uncompletedorders;
+        
+    }
+    
+    public int getTotalPreparationMinutes() {
+        
+        int sum = 0;
+        
+        for (Order ord: orderlist) {
+            sum += ord.getPreparationMinutes();
+        }
+        return sum;
+    }
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
