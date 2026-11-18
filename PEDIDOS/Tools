@@ -1,0 +1,20 @@
+
+public class Tools {
+
+    public static int getPreparationMinutes(String category) {
+
+        switch (category) {
+            case "ELECTRONICS":
+                return 30;
+
+            case "FOOD":
+                return 10;
+
+            case "CLOTHING":
+                return 15;
+
+            default:
+                return 20;
+        }
+    }
+}
