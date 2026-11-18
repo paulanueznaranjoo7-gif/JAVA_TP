@@ -1,0 +1,286 @@
+
+import java.util.*;
+
+public class UseOrders {
+
+    public static void main(String[] args) {
+
+        probarClases();
+        probarAdd();
+        probarRemove();
+        probarGetOrders();
+        probarGetOrdersSorted();
+        probarGetCustomerNames();
+        probarGetPendingOrders();
+        probarGetTotalPreparationMinutes();
+    }
+
+    private static void probarClases() {
+
+        System.out.println("\n=== PRUEBA CLASES ===");
+
+        StandardOrder o1 = new StandardOrder(
+            "P001", "Ordenador", "Ana", "ELECTRONICS"
+        );
+
+        UrgentOrder o2 = new UrgentOrder(
+            "P002", "Documentos", "Luis", 5
+        );
+
+        System.out.println("Pedido normal: " + o1);
+        System.out.println("Pedido urgente: " + o2);
+
+        System.out.println("Horas de preparacion no, minutos:");
+        System.out.println("Normal (espero 30): "
+                           + o1.getPreparationMinutes());
+
+        System.out.println("Urgente (espero 5): "
+                           + o2.getPreparationMinutes());
+
+        System.out.println("Estado inicial (espero false): "
+                           + o1.isCompleted());
+
+        o1.setCompleted(true);
+
+        System.out.println("Estado cambiado (espero true): "
+                           + o1.isCompleted());
+
+        StandardOrder duplicado = new StandardOrder(
+            "P001", "Otro producto", "Marta", "FOOD"
+        );
+
+        System.out.println("Equals mismo ID (espero true): "
+                           + o1.equals(duplicado));
+
+        System.out.println("HashCode mismo ID (espero true): "
+                           + (o1.hashCode() == duplicado.hashCode()));
+    }
+
+    private static void probarAdd() {
+
+        System.out.println("\n=== PRUEBA ADD ===");
+
+        OrderRegister register = new OrderRegister();
+
+        StandardOrder o1 = new StandardOrder(
+            "P010", "Teclado", "Ana", "ELECTRONICS"
+        );
+
+        UrgentOrder o2 = new UrgentOrder(
+            "P011", "Documentos", "Luis", 8
+        );
+
+        System.out.println("Añadir o1 (espero true): "
+                           + register.add(o1));
+
+        System.out.println("Añadir o2 (espero true): "
+                           + register.add(o2));
+
+        System.out.println("Añadir o1 otra vez (espero false): "
+                           + register.add(o1));
+
+        StandardOrder duplicado = new StandardOrder(
+            "P010", "Monitor", "Pedro", "ELECTRONICS"
+        );
+
+        System.out.println("Añadir mismo ID (espero false): "
+                           + register.add(duplicado));
+
+        System.out.println("Añadir null (espero false): "
+                           + register.add(null));
+
+        StandardOrder vacio = new StandardOrder(
+            "P012", "", "Marta", "FOOD"
+        );
+
+        System.out.println("Añadir nombre vacio (espero false): "
+                           + register.add(vacio));
+    }
+
+    private static void probarRemove() {
+
+        System.out.println("\n=== PRUEBA REMOVE ===");
+
+        OrderRegister register = new OrderRegister();
+
+        StandardOrder o1 = new StandardOrder(
+            "P020", "Zapatos", "Ana", "CLOTHING"
+        );
+
+        UrgentOrder o2 = new UrgentOrder(
+            "P021", "Paquete", "Luis", 12
+        );
+
+        register.add(o1);
+        register.add(o2);
+
+        System.out.println("Eliminar P020 (espero true): "
+                           + register.removeById("P020"));
+
+        System.out.println("Eliminar otra vez (espero false): "
+                           + register.removeById("P020"));
+
+        System.out.println("Eliminar inexistente (espero false): "
+                           + register.removeById("P999"));
+
+        System.out.println("Pedidos restantes (espero 1): "
+                           + register.getOrders().size());
+    }
+
+    private static void probarGetOrders() {
+
+        System.out.println("\n=== PRUEBA GET ORDERS ===");
+
+        OrderRegister register = new OrderRegister();
+
+        register.add(new StandardOrder(
+            "P030", "Mesa", "Ana", "CLOTHING"
+        ));
+
+        register.add(new UrgentOrder(
+            "P031", "Informe", "Luis", 6
+        ));
+
+        List<Order> copia = register.getOrders();
+
+        System.out.println("Tamaño copia (espero 2): "
+                           + copia.size());
+
+        copia.clear();
+
+        System.out.println("Tamaño original (espero 2): "
+                           + register.getOrders().size());
+    }
+
+    private static void probarGetOrdersSorted() {
+
+        System.out.println("\n=== PRUEBA LAMBDA ===");
+
+        OrderRegister register = new OrderRegister();
+
+        register.add(new StandardOrder(
+            "P045", "Teclado", "Ana", "ELECTRONICS"
+        ));
+
+        register.add(new StandardOrder(
+            "P043", "Monitor", "Luis", "ELECTRONICS"
+        ));
+
+        register.add(new UrgentOrder(
+            "P044", "Teclado", "Marta", 5
+        ));
+
+        register.add(new StandardOrder(
+            "P042", "Auriculares", "Pedro", "ELECTRONICS"
+        ));
+
+        System.out.println("Pedidos ordenados por nombre e ID:");
+
+        List<Order> ordenados = register.getOrdersSorted();
+
+        for (Order order : ordenados) {
+            System.out.println(order);
+        }
+
+        ordenados.clear();
+
+        System.out.println("Tamaño original (espero 4): "
+                           + register.getOrders().size());
+    }
+
+    private static void probarGetCustomerNames() {
+
+        System.out.println("\n=== PRUEBA HASHSET ===");
+
+        OrderRegister register = new OrderRegister();
+
+        register.add(new StandardOrder(
+            "P050", "Ordenador", "Ana", "ELECTRONICS"
+        ));
+
+        register.add(new UrgentOrder(
+            "P051", "Documentos", "Luis", 5
+        ));
+
+        register.add(new StandardOrder(
+            "P052", "Ratón", "Ana", "ELECTRONICS"
+        ));
+
+        register.add(new StandardOrder(
+            "P053", "Camiseta", "Marta", "CLOTHING"
+        ));
+
+        Set<String> customers = register.getCustomerNames();
+
+        System.out.println("Nombres de clientes:");
+
+        for (String customer : customers) {
+            System.out.println(customer);
+        }
+
+        System.out.println("Clientes distintos (espero 3): "
+                           + customers.size());
+
+        System.out.println("Contiene Ana (espero true): "
+                           + customers.contains("Ana"));
+
+        System.out.println("Contiene Pedro (espero false): "
+                           + customers.contains("Pedro"));
+    }
+
+    private static void probarGetPendingOrders() {
+
+        System.out.println("\n=== PRUEBA PENDIENTES ===");
+
+        OrderRegister register = new OrderRegister();
+
+        StandardOrder o1 = new StandardOrder(
+            "P060", "Ordenador", "Ana", "ELECTRONICS"
+        );
+
+        UrgentOrder o2 = new UrgentOrder(
+            "P061", "Documentos", "Luis", 5
+        );
+
+        StandardOrder o3 = new StandardOrder(
+            "P062", "Zapatos", "Marta", "CLOTHING"
+        );
+
+        register.add(o1);
+        register.add(o2);
+        register.add(o3);
+
+        o1.setCompleted(true);
+
+        List<Order> pendientes = register.getPendingOrders();
+
+        System.out.println("Pedidos pendientes (espero 2): "
+                           + pendientes.size());
+
+        for (Order order : pendientes) {
+            System.out.println(order);
+        }
+    }
+
+    private static void probarGetTotalPreparationMinutes() {
+
+        System.out.println("\n=== PRUEBA TOTAL MINUTOS ===");
+
+        OrderRegister register = new OrderRegister();
+
+        register.add(new StandardOrder(
+            "P070", "Ordenador", "Ana", "ELECTRONICS"
+        ));
+
+        register.add(new StandardOrder(
+            "P071", "Comida", "Luis", "FOOD"
+        ));
+
+        register.add(new UrgentOrder(
+            "P072", "Documentos", "Marta", 7
+        ));
+
+        System.out.println("Minutos totales (espero 47): "
+                           + register.getTotalPreparationMinutes());
+    }
+}
