@@ -1,0 +1,17 @@
+public class StandardOrder extends Order{
+    
+    private String category;
+    
+    public StandardOrder(String id, String name, String costumer, String category) {
+        super(id, name, costumer);
+        this.category = category;
+    }
+    
+    public String getCategory() {
+        return this.category;
+    }
+    
+    public int getPreparationMinutes(){
+        return  Tools.getPreparationMinutes(category);
+    }
+}
